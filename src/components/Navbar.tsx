@@ -24,6 +24,18 @@ export default function Navbar() {
         const nav = navRef.current;
         if (!nav) return;
 
+        gsap.set(nav, { yPercent: -100 });
+
+        const handleReveal = () => {
+            gsap.to(nav, {
+                yPercent: 0,
+                duration: 0.6,
+                ease: "power3.out"
+            });
+        };
+
+        window.addEventListener("hero:navbarReveal", handleReveal);
+
         let lastScroll = 0;
         const showAnim = gsap.fromTo(
             nav,
@@ -49,6 +61,7 @@ export default function Navbar() {
 
         return () => {
             ScrollTrigger.getAll().forEach((t) => t.kill());
+            window.removeEventListener("hero:navbarReveal", handleReveal);
         };
     }, []);
 
