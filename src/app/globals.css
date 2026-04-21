@@ -41,7 +41,8 @@
 }
 
 html {
-  scroll-behavior: auto; /* Lenis handles smooth scroll */
+  scroll-behavior: auto;
+  /* Lenis handles smooth scroll */
 }
 
 body {
@@ -55,17 +56,35 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: inherit;
   line-height: 1.15;
   margin: 0;
 }
 
-p { margin: 0; }
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; }
-img { display: block; max-width: 100%; }
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
 
 /* ── Utility Classes ─────────────────────────────────── */
 .label-caps {
@@ -89,13 +108,11 @@ img { display: block; max-width: 100%; }
 /* ── Gold Gradient Rule ──────────────────────────────── */
 .gold-rule {
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--gold) 30%,
-    var(--gold) 70%,
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      var(--gold) 30%,
+      var(--gold) 70%,
+      transparent);
   opacity: 0.3;
   border: none;
 }
@@ -117,16 +134,40 @@ img { display: block; max-width: 100%; }
   border: 0.5px solid rgba(201, 168, 108, 0.08);
 }
 
-.concentric-rings .ring:nth-child(1) { width: 200px; height: 200px; }
-.concentric-rings .ring:nth-child(2) { width: 400px; height: 400px; }
-.concentric-rings .ring:nth-child(3) { width: 600px; height: 600px; }
-.concentric-rings .ring:nth-child(4) { width: 800px; height: 800px; }
-.concentric-rings .ring:nth-child(5) { width: 1000px; height: 1000px; }
+.concentric-rings .ring:nth-child(1) {
+  width: 200px;
+  height: 200px;
+}
+
+.concentric-rings .ring:nth-child(2) {
+  width: 400px;
+  height: 400px;
+}
+
+.concentric-rings .ring:nth-child(3) {
+  width: 600px;
+  height: 600px;
+}
+
+.concentric-rings .ring:nth-child(4) {
+  width: 800px;
+  height: 800px;
+}
+
+.concentric-rings .ring:nth-child(5) {
+  width: 1000px;
+  height: 1000px;
+}
 
 /* ── Marquee ─────────────────────────────────────────── */
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .marquee-track {
@@ -145,9 +186,11 @@ img { display: block; max-width: 100%; }
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--ink);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--gold-dk);
   border-radius: 3px;

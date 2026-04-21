@@ -50,7 +50,7 @@ export default function Hero() {
         <section
             ref={sectionRef}
             id="hero"
-            className="relative min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-[var(--forest)] text-[var(--ivory)] pt-36 pb-12 px-6 md:px-6 gap-6"
+            className="relative min-h-[110vh] grid grid-cols-1 lg:grid-cols-2 bg-[var(--forest)] text-[var(--ivory)] pt-36 pb-12 px-6 md:px-6 gap-6"
         >
             {/* ── LEFT COLUMN ── */}
             <div className="flex flex-col justify-between h-full">
@@ -93,7 +93,7 @@ export default function Hero() {
                             muted
                             loop
                             playsInline
-                            className="absolute bottom-0 left-0 w-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            className="absolute bottom-0 left-0 w-full object-cover group-hover:scale-120 transition-transform duration-700"
                             style={{ height: "280px" }}
                         />
                         <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-700" />
@@ -126,7 +126,7 @@ export default function Hero() {
                         muted
                         loop
                         playsInline
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-120 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-700" />
                 </div>

@@ -99,6 +99,7 @@ export default function Waitlist() {
                             placeholder="Your email address"
                             required
                             aria-label="Email address"
+                            suppressHydrationWarning
                             className="flex-1 w-full px-5 py-3 font-sans font-light text-sm bg-transparent border outline-none transition-colors duration-200 focus:border-gold"
                             style={{
                                 borderColor: "var(--taupe)",
@@ -114,6 +115,7 @@ export default function Waitlist() {
                         <button
                             type="submit"
                             className="font-sans text-xs tracking-[0.18em] uppercase px-8 py-3.5 transition-all duration-300 whitespace-nowrap"
+                            suppressHydrationWarning
                             style={{
                                 background: "var(--gold)",
                                 color: "var(--ink)",
@@ -125,9 +127,7 @@ export default function Waitlist() {
                                 (e.currentTarget.style.background = "var(--gold)")
                             }
                             aria-label="Join Waitlist"
-                        >
-                            Join Waitlist
-                        </button>
+                        >Join Waitlist</button>
                     </form>
                 )}
 
