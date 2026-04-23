@@ -9,18 +9,21 @@ gsap.registerPlugin(ScrollTrigger);
 
 const OFFERINGS = [
     {
+        category: "Subscription",
         title: "Daily Flower Subscription",
         desc: "Fresh temple flowers delivered every morning. Curated weekly by bloom and season.",
         img: "/images/offering-daily.png",
         alt: "Fresh marigold flowers",
     },
     {
+        category: "Essentials",
         title: "Ritual Essentials Box",
         desc: "Agarbatti, camphor, kumkum, vibhuti — restocked before you run out.",
         img: "/images/offering-ritual.png",
         alt: "Incense and ritual essentials",
     },
     {
+        category: "Collections",
         title: "Festival Collections",
         desc: "Specially curated arrangements for Navratri, Onam, Deepavali, and more.",
         img: "/images/offering-festival.png",
@@ -28,6 +31,7 @@ const OFFERINGS = [
     },
     {
         id: "gifting",
+        category: "Gifting",
         title: "Gift a Ritual",
         desc: "Send the gift of daily devotion to a family you love. Includes a handwritten card.",
         img: "/images/offering-gift.png",
@@ -40,35 +44,34 @@ export default function Offerings() {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            // Header reveal
+            // Header reveal (Synchronized)
             gsap.fromTo(
                 ".offerings-header",
-                { opacity: 0, y: 40 },
+                { opacity: 0, y: 30 },
                 {
                     opacity: 1,
                     y: 0,
-                    duration: 0.9,
+                    duration: 1.2,
                     ease: "power3.out",
                     scrollTrigger: {
                         trigger: ".offerings-header",
-                        start: "top 85%",
+                        start: "top 90%",
                     },
                 }
             );
 
-            // Cards stagger
+            // Cards reveal (Simultaneous, no stagger)
             gsap.fromTo(
                 ".offering-card",
                 { opacity: 0, y: 40 },
                 {
                     opacity: 1,
                     y: 0,
-                    duration: 0.8,
-                    stagger: 0.15,
+                    duration: 1.2,
                     ease: "power3.out",
                     scrollTrigger: {
                         trigger: ".offerings-grid",
-                        start: "top 80%",
+                        start: "top 85%",
                     },
                 }
             );
@@ -81,84 +84,70 @@ export default function Offerings() {
         <section
             ref={sectionRef}
             id="offerings"
-            className="py-24 md:py-32 px-6"
+            className="py-24 md:py-0 px-6"
             style={{ background: "var(--ivory)" }}
         >
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-full mx-auto">
                 {/* Header */}
-                <div className="offerings-header text-center mb-16">
-                    <p className="chapter-label">Chapter Two</p>
-                    <h2
-                        className="font-serif text-3xl md:text-5xl font-light mb-6"
-                        style={{ color: "var(--ink)" }}
+                <div className="offerings-header mb-16 border-b border-[rgba(0,0,0,0.1)] pb-12">
+                    <div className="flex items-center gap-2 mb-4">
+                        <div className="w-1.5 h-1.5 bg-[var(--ink)] rounded-full"></div>
+                        <p className="text-xs tracking-[0.2em] font-sans font-light uppercase text-[var(--taupe)]">
+                            Chapter Two
+                        </p>
+                    </div>
+                    <h1
+                        className="font-serif text-5xl md:text-7xl lg:text-8xl tracking-tight"
+                        style={{ color: "var(--ink)", fontWeight: 700 }}
                     >
-                        What Aarna Offers
-                    </h2>
-                    <div
-                        className="h-px w-16 mx-auto"
-                        style={{ background: "var(--gold)" }}
-                    />
+                        What Aarna offers
+                    </h1>
                 </div>
 
-                {/* 2×2 Grid */}
-                <div className="offerings-grid grid md:grid-cols-2 gap-8">
+                {/* 4-column Grid */}
+                <div className="offerings-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-16">
                     {OFFERINGS.map((item, i) => (
                         <div
                             key={i}
                             id={item.id}
-                            className="offering-card group relative overflow-hidden bg-white cursor-pointer transition-shadow duration-300"
-                            style={{
-                                boxShadow: "0 2px 20px rgba(14,30,20,0.05)",
-                            }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.boxShadow =
-                                    "0 4px 30px rgba(201,168,108,0.15)";
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.boxShadow =
-                                    "0 2px 20px rgba(14,30,20,0.05)";
-                            }}
+                            className="offering-card group flex flex-col"
                         >
-                            {/* Image */}
-                            <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
+                            {/* Card Header (Text Above) */}
+                            <div className="mb-6">
+                                <p className="text-xs tracking-[0.2em] uppercase mb-2 font-sans font-light text-[var(--taupe)]">
+                                    {item.category}
+                                </p>
+                                <h3
+                                    className="font-serif text-2xl flex items-center justify-between"
+                                    style={{ color: "var(--ink)", fontWeight: 500 }}
+                                >
+                                    <span>{item.title}</span>
+                                    <span className="text-xl opacity-40 transition-opacity group-hover:opacity-100 transform group-hover:translate-x-1 group-hover:-translate-y-1 duration-300">
+                                        ↗
+                                    </span>
+                                </h3>
+                            </div>
+
+                            {/* Image Container */}
+                            <div className="relative overflow-hidden bg-[var(--cream)]" style={{ aspectRatio: "9/16" }}>
                                 <img
                                     src={item.img}
                                     alt={item.alt}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                                    className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-[1.1]"
                                 />
-                                {/* Gold accent line */}
-                                <div
-                                    className="absolute top-0 left-0 w-12 h-0.5"
-                                    style={{ background: "var(--gold)" }}
-                                />
+                                {/* Bottom overlay for desc or hover effect */}
+                                <div className="absolute inset-0 bg-[var(--ink)]/0 group-hover:bg-[var(--ink)]/5 transition-colors duration-500" />
                             </div>
 
-                            {/* Content */}
-                            <div className="p-6 md:p-8">
-                                <h3
-                                    className="font-serif text-xl md:text-2xl font-light mb-3"
-                                    style={{ color: "var(--ink)" }}
-                                >
-                                    {item.title}
-                                </h3>
-                                <p
-                                    className="font-sans font-light text-sm leading-relaxed mb-4"
-                                    style={{ color: "var(--taupe)" }}
-                                >
-                                    {item.desc}
-                                </p>
-                                <span
-                                    className="font-sans text-xs tracking-wider uppercase transition-colors duration-200"
-                                    style={{ color: "var(--gold)" }}
-                                >
-                                    Learn more →
-                                </span>
-                            </div>
+                            {/* Optional Description (placed subtle below) */}
+                            <p className="mt-4 font-sans font-light text-sm leading-relaxed max-w-[95%]" style={{ color: "var(--taupe)" }}>
+                                {item.desc}
+                            </p>
                         </div>
                     ))}
                 </div>
 
-                <div className="mt-16">
+                <div className="mt-24">
                     <OrnamentDivider />
                 </div>
             </div>
