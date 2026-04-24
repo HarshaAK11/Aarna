@@ -10,47 +10,97 @@ const STEPS = [
     {
         num: "01",
         title: "Choose your ritual",
-        desc: "Select a subscription plan tailored to your household's needs.",
+        desc: "Select a subscription plan tailored to your household's needs. Daily flowers, essentials, or both — you decide what your altar deserves.",
+        img: "/images/hiw-1.png",
+        alt: "Choose your ritual",
     },
     {
         num: "02",
         title: "We curate, you pray",
-        desc: "Our team sources the freshest flowers daily from local farms.",
+        desc: "Our team sources the freshest flowers daily from farms within 50km. Every week's selection is chosen by our in-house ritual curator, not an algorithm.",
+        img: "/videos/hiw-2.mp4",
+        alt: "We curate your flowers",
     },
     {
         num: "03",
         title: "Delivered before dawn",
-        desc: "At your door before your morning puja. Every single day.",
+        desc: "At your door before your morning puja. Every single day. Miss a day? We deliver double the next. Your ritual never pauses.",
+        img: "/videos/hiw-3.mp4",
+        alt: "Delivered before dawn",
     },
 ];
 
 export default function HowItWorks() {
     const sectionRef = useRef<HTMLElement>(null);
+    const cardsRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const ctx = gsap.context(() => {
+            const cards = gsap.utils.toArray<HTMLElement>(".hiw-card");
+
+            // Main stacking timeline
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: cardsRef.current,
+                    start: "top top",
+                    end: () => `+=${(cards.length - 1) * 100}%`,
+                    pin: true,
+                    scrub: true,
+                    anticipatePin: 1,
+                }
+            });
+
+            // Animate each card (except the first) sliding up
+            // and the previous card scaling down/fading back
+            cards.forEach((card, i) => {
+                if (i === 0) return;
+
+                // Scale down and fade the previous card as the new one appears
+                tl.to(cards[i - 1], {
+                    scale: 0.8,
+                    //transformPerspective: 1200,
+                    rotationX: 8,
+                    transformStyle: "preserve-3d",
+                    duration: 1,
+                    ease: "power1.inOut"
+                }, i - 1);
+
+                // Slide the current card up
+                tl.fromTo(card,
+                    { y: "100vh" },
+                    { y: 0, ease: "none", duration: 1 },
+                    i - 1
+                );
+            });
+
+            // Header reveal
             gsap.fromTo(
                 ".hiw-header",
-                { opacity: 0, y: 40 },
+                { opacity: 0 },
                 {
                     opacity: 1,
-                    y: 0,
-                    duration: 0.9,
-                    ease: "power3.out",
-                    scrollTrigger: { trigger: ".hiw-header", start: "top 85%" },
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: ".hiw-header",
+                        start: "top 85%",
+                        once: true,
+                    },
                 }
             );
 
             gsap.fromTo(
-                ".hiw-step",
-                { opacity: 0, y: 40 },
+                ".hiw-title-reveal",
+                { yPercent: 100 },
                 {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    stagger: 0.15,
+                    yPercent: 0,
+                    duration: 1.2,
+                    stagger: 0.1,
                     ease: "power3.out",
-                    scrollTrigger: { trigger: ".hiw-grid", start: "top 80%" },
+                    scrollTrigger: {
+                        trigger: ".hiw-header",
+                        start: "top 85%",
+                        once: true,
+                    },
                 }
             );
         }, sectionRef);
@@ -62,57 +112,126 @@ export default function HowItWorks() {
         <section
             ref={sectionRef}
             id="how-it-works"
-            className="py-24 md:py-32 px-6"
-            style={{ background: "var(--forest)" }}
+            style={{ background: "var(--ink)" }}
+            className="px-6 py-16"
         >
-            <div className="max-w-6xl mx-auto">
-                {/* Header */}
-                <div className="hiw-header text-center mb-16 md:mb-20">
-                    <p className="chapter-label">Chapter Three</p>
+            {/* ── HEADER — sits above the stacking cards ── */}
+            <div
+                className="hiw-header max-w-full px-8 md:px-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-end"
+            >
+                {/* Left — large all-caps title like PieterKoopt */}
+                <div>
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-2 h-2 bg-[var(--ivory)] rounded-full"></div>
+                        <p className="text-sm text-[var(--taupe)] tracking-[0.2em] leading-relaxed font-sans font-light uppercase">Chapter Three</p>
+                    </div>
                     <h2
-                        className="font-serif text-3xl md:text-5xl font-light"
-                        style={{ color: "var(--ivory)" }}
+                        className="font-serif leading-[0.88] uppercase"
+                        style={{
+                            fontSize: "clamp(40px, 6vw, 96px)",
+                            color: "var(--ivory)",
+                            fontWeight: 500,
+                            letterSpacing: "0.02em",
+                            lineHeight: "0.88",
+                        }}
                     >
-                        The Ritual, Made Simple
+                        <span className="inline-block overflow-hidden">
+                            <span className="hiw-title-reveal inline-block">The Ritual</span>
+                        </span>
+                        <br />
+                        <span className="inline-block overflow-hidden" style={{ color: "var(--gold)" }}>
+                            <span className="hiw-title-reveal inline-block">Made Simple.</span>
+                        </span>
                     </h2>
                 </div>
 
-                {/* 3-step grid */}
-                <div className="hiw-grid grid md:grid-cols-3 gap-8 md:gap-12">
-                    {STEPS.map((step, i) => (
-                        <div key={i} className="hiw-step relative text-center px-4">
-                            {/* Ghost number */}
+                {/* Right — description */}
+                <div className="pl-70">
+                    <p
+                        className="font-sans font-base text-lg md:text-xl leading-relaxed"
+                        style={{ color: "var(--taupe-lt)" }}
+                    >
+                        At Aarna, we keep things sacred, simple, and reliable.
+                        Follow the steps below - we take care of everything else.
+                    </p>
+                </div>
+            </div>
+
+            <div
+                ref={cardsRef}
+                className="relative w-full overflow-hidden"
+                style={{ height: "100vh", perspective: "1200px" }}
+            >
+                {STEPS.map((step, i) => (
+                    <div
+                        key={i}
+                        className="hiw-card absolute p-10 inset-0 w-[90%] h-[70%] m-auto grid grid-cols-1 md:grid-cols-[1.5fr_1fr] border border-[var(--gold)] rounded-lg"
+                        style={{
+                            background: "var(--ink)",
+                            zIndex: i + 1,
+                        }}
+                    >
+                        {/* Left — text content */}
+                        <div className="flex flex-col justify-between h-full">
+                            {/* Ghost number — top left */}
                             <span
-                                className="block font-serif text-[6rem] md:text-[8rem] font-light leading-none select-none"
-                                style={{ color: "rgba(201,168,108,0.08)" }}
+                                className="inline-block font-serif italic font-light text-9xl leading-none select-none -mt-10"
+                                style={{
+                                    color: "rgba(201,168,108,0.5)",
+                                }}
                             >
                                 {step.num}
                             </span>
 
-                            <h3
-                                className="font-serif text-xl md:text-2xl font-light mb-4 -mt-8"
-                                style={{ color: "var(--ivory)" }}
-                            >
-                                {step.title}
-                            </h3>
+                            {/* Title + desc — bottom left */}
+                            <div className="flex flex-col gap-6 w-1/2">
+                                <h3
+                                    className="font-serif uppercase"
+                                    style={{
+                                        fontSize: "clamp(24px, 3.5vw, 46px)",
+                                        color: "var(--ivory)",
+                                        letterSpacing: "0.04em",
+                                        fontWeight: 500,
+                                        lineHeight: 1,
+                                    }}
+                                >
+                                    {step.title}
+                                </h3>
+                                <p
+                                    className="font-sans font-light text-base leading-relaxed max-w-md"
+                                    style={{ color: "var(--taupe-lt)" }}
+                                >
+                                    {step.desc}
+                                </p>
+                            </div>
+                        </div>
 
-                            <p
-                                className="font-sans font-light text-sm leading-relaxed"
-                                style={{ color: "var(--taupe-lt)" }}
-                            >
-                                {step.desc}
-                            </p>
-
-                            {/* Divider between steps (not after last) */}
-                            {i < STEPS.length - 1 && (
-                                <div
-                                    className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-24"
-                                    style={{ background: "var(--rule)" }}
+                        {/* Right — media (Image or Video) */}
+                        <div className="relative overflow-hidden h-full">
+                            {step.img.endsWith('.mp4') ? (
+                                <video
+                                    src={step.img}
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                />
+                            ) : (
+                                <img
+                                    src={step.img}
+                                    alt={step.alt}
+                                    className="absolute inset-0 w-full h-full object-cover"
                                 />
                             )}
+                            {/* Subtle dark overlay */}
+                            <div
+                                className="absolute inset-0"
+                                style={{ background: "rgba(14,30,20,0.2)" }}
+                            />
                         </div>
-                    ))}
-                </div>
+                    </div>
+                ))}
             </div>
         </section>
     );

@@ -107,9 +107,9 @@ export default function AboutSection() {
 
                     {/* Main Heading */}
                     <div className="md:col-span-9">
-                        <div ref={subHeadingRef} className="flex items-center gap-3">
+                        <div ref={subHeadingRef} className="flex items-center gap-3 mb-4">
                             <div className="w-2 h-2 bg-[var(--ink)] rounded-full"></div>
-                            <p className="text-sm text-[var(--taupe)] leading-relaxed font-sans font-light uppercase">Chapter One</p>
+                            <p className="text-sm text-[var(--taupe)] tracking-[0.2em] leading-relaxed font-sans font-light uppercase">Chapter One</p>
                         </div>
                         <h2 className="font-serif text-[var(--ink)] space-x-6"
                             style={{ fontSize: "clamp(52px, 9vw, 140px)", fontWeight: 700 }}
